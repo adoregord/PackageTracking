@@ -2,48 +2,41 @@ package com.example.tracking.model;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@Table(name = "pengiriman")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@NoArgsConstructor
+@AllArgsConstructor
 public class Pengiriman {
-    // Pengiriman → IdPengiriman string, Service service,Paket paket, HargaPengiriman float, CheckpointPengiriman []Lokasi, IsReceived
-    
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id_pengiriman;
-    
+
     @ManyToOne
-    @JoinColumn(name = "service_id")
+    @JoinColumn(name = "service_id", nullable = false)
     private Service service;
 
     @ManyToOne
-    @JoinColumn(name = "paket_id")
+    @JoinColumn(name = "paket_id", nullable = false)
     private Paket paket;
 
-    @Column(nullable = false)
     private float hargaPengiriman;
 
-    @OneToMany
+    @ElementCollection
+    @CollectionTable(name = "checkpoint_pengiriman", joinColumns = @JoinColumn(name = "pengiriman_id"))
     private List<Lokasi> checkpointPengiriman;
 
-    @Column(nullable = false)
     private boolean isReceived;
 }
