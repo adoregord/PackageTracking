@@ -23,6 +23,6 @@ public class Lokasi {
 
     private String namaLokasi;
 
-    @Formula("CONCAT('<', nama_lokasi, '-', LPAD(CAST(id_lokasi AS CHAR), 4, '0'), '>')")
+    @Formula("CONCAT('<', nama_lokasi, '-', LPAD(CAST(id_lokasi AS VARCHAR), 4, '0'), '>')")
     private String alamat;
 }

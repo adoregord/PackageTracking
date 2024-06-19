@@ -22,4 +22,5 @@ public class Penerima {
 
     private String namaPenerima;
     private String noTelp;
+
 }

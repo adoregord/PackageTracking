@@ -10,24 +10,42 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.tracking.model.Penerima;
-import com.example.tracking.repository.PenerimaRepository;
+import com.example.tracking.service.PenerimaService;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 @RestController
+@Slf4j
 @RequestMapping("/api/v1/penerima")
 public class PenerimaController {
+
     @Autowired
-    PenerimaRepository penerimaRepository;
+    PenerimaService penerimaService;
 
     @GetMapping
-    public List<Penerima> getAllPenerima() {
-        return penerimaRepository.findAll();
+    public ResponseEntity<List<Penerima>> getAllPenerima() {
+       try {
+            log.info("Menampilkan semua penerima");
+            return ResponseEntity.ok(penerimaService.getAllPenerima());
+        } 
+        catch (Exception e) {
+            log.info("Gagal menampilkan semua penerima");
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PostMapping
     public ResponseEntity<?> addPenerima(@RequestBody Penerima penerima) {
-        penerimaRepository.save(penerima);
-        return ResponseEntity.ok("Success adding\n" + penerima);
+        try {
+            log.info("Menambahkan penerima \n");
+            return ResponseEntity.ok(penerimaService.addPenerima(penerima) + "Berhasil menambahkan penerima " + penerima.getNamaPenerima());
+        } 
+        catch (Exception e) {
+            log.info("Gagal menambahkan penerima" + e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
+        
     }
 }

@@ -3,7 +3,9 @@ package com.example.tracking.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.tracking.model.Pengirim;
-import com.example.tracking.repository.PengirimRepository;
+import com.example.tracking.service.PengirimService;
+
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -19,21 +21,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
+@Slf4j
 @RequestMapping("/api/v1/pengirim")
 public class PengirimController {
 
     @Autowired
-    PengirimRepository pengirimRepository;
+    PengirimService pengirimService;
 
     @GetMapping
-    public List<Pengirim> AllPengirim() {
-        return pengirimRepository.findAll();
+    public ResponseEntity<List<Pengirim>> AllPengirim() {
+        try {
+            log.info("Menampilkan semua pengirim");
+            return ResponseEntity.ok(pengirimService.AllPengirim());
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+            log.info("Gagal menampilkan semua pengirim " + e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PostMapping
     public ResponseEntity<?> postPengirim(@RequestBody Pengirim pengirim) {
-        pengirimRepository.save(pengirim);
-        return ResponseEntity.ok("Success adding\n" + pengirim);
+        return pengirimService.postPengirim(pengirim);
     }
 
 

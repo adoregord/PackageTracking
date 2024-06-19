@@ -22,4 +22,5 @@ public class Pengirim {
 
     private String namaPengirim;
     private String noTelp;
+    
 }

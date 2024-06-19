@@ -8,10 +8,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
-
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-
 
 @Entity
 @Data
@@ -37,4 +35,3 @@ public class Paket {
     @JoinColumn(name = "id_tujuan_pengiriman")
     private Lokasi tujuanPengiriman;
 }
-

@@ -3,7 +3,9 @@ package com.example.tracking.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.tracking.model.Lokasi;
-import com.example.tracking.repository.LokasiRepository;
+import com.example.tracking.service.LokasiService;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -13,33 +15,48 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-
 
 
 @RestController
 @RequestMapping("/api/v1/lokasi")
+@Slf4j
 public class LokasiController {
 
     @Autowired
-    LokasiRepository lokasiRepository;
+    LokasiService lokasiService;
 
     @GetMapping
-    public List<Lokasi> getAllLoc() {
-        return lokasiRepository.findAll();
+    public ResponseEntity<List<Lokasi>> getAllLoc() {
+        try {
+            log.info("Menampilkan semua lokasi ");
+            return ResponseEntity.ok(lokasiService.getAllLoc());
+        } catch (Exception e) {
+            log.info("Gagal menambahkan lokasi " + e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PostMapping
     public ResponseEntity<?> addLoc(@RequestBody Lokasi lokasi) {
-        lokasiRepository.save(lokasi);
-        return ResponseEntity.ok("Success adding\n" + lokasi);
+        try {
+            log.info("Menambahkan lokasi " + lokasi.getNamaLokasi());
+            return ResponseEntity.ok(lokasiService.addLoc(lokasi) + "Berhasil menambahkan lokasi " + lokasi.getNamaLokasi());
+
+        } catch (Exception e) {
+            log.info("Gagal menambahkan lokasi " + e.getMessage());
+            return ResponseEntity.badRequest().body(("Gagal menambahkan lokasi " + e.getMessage()));
+        }
     }
     
-    @PutMapping("path/{id}")
-    public String putMethodName(@PathVariable String id, @RequestBody String entity) {
-        //TODO: process PUT request
-        
-        return entity;
+    @GetMapping("/checkpoints")
+    public ResponseEntity<List<Object>> getCheckpointLokasi() {
+        try {
+            log.info("Menampilkan checkpoint lokasi ");
+            return ResponseEntity.ok(lokasiService.getCheckpointLokasi());
+        } catch (Exception e) {
+            log.info("Gagal menampilkan lokasi"+e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
     }
+    
 }

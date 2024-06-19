@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Service {
+public class Servis {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_service;
@@ -22,6 +22,6 @@ public class Service {
     private String namaService;
 
     @Column(nullable = false)
-    private float hargaPerKg;
-    
+    private Float hargaPerKg;
+
 }

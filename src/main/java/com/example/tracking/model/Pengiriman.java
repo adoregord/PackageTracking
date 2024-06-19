@@ -3,6 +3,7 @@ package com.example.tracking.model;
 import java.util.List;
 
 import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,17 +27,22 @@ public class Pengiriman {
 
     @ManyToOne
     @JoinColumn(name = "service_id", nullable = false)
-    private Service service;
+    private Servis servis;
 
     @ManyToOne
     @JoinColumn(name = "paket_id", nullable = false)
     private Paket paket;
 
-    private float hargaPengiriman;
+    private Float hargaPengiriman;
 
     @ElementCollection
     @CollectionTable(name = "checkpoint_pengiriman", joinColumns = @JoinColumn(name = "pengiriman_id"))
+    @Column(name = "lokasi_id")
     private List<Lokasi> checkpointPengiriman;
 
-    private boolean isReceived;
+    // @OneToMany(mappedBy = "pengiriman", cascade = CascadeType.ALL)
+    // private List<CheckpointPengiriman> checkpointPengiriman;
+
+    private Boolean isReceived;
+
 }
