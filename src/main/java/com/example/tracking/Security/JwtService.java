@@ -20,7 +20,7 @@ import java.util.HashMap;
 @SuppressWarnings("deprecation")
 public class JwtService {
 
-    private static final String SECRET_KEY = "a2f13e9d8787a9fad4bd0e618c5242ee31ce924b781b64d5263952d75a2b3bd0";
+    private static final String SECRET_KEY = "a2f13e9d8787a9fad4bd0didic5242ee31ce924b781b64d5263952d75a2bDidi";
 
     public String extractUsername(String tokenJwt) {
         return extractClaim(tokenJwt, Claims::getSubject);

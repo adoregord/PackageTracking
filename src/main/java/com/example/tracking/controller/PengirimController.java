@@ -17,9 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
-
-
 @RestController
 @Slf4j
 @RequestMapping("/api/v1/pengirim")
@@ -33,8 +30,7 @@ public class PengirimController {
         try {
             log.info("Menampilkan semua pengirim");
             return ResponseEntity.ok(pengirimService.AllPengirim());
-        } 
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             log.info("Gagal menampilkan semua pengirim " + e.getMessage());
             return ResponseEntity.badRequest().build();
@@ -43,8 +39,14 @@ public class PengirimController {
 
     @PostMapping
     public ResponseEntity<?> postPengirim(@RequestBody Pengirim pengirim) {
-        return pengirimService.postPengirim(pengirim);
+        try {
+            log.info("Menambahkan pengirim \n");
+            return ResponseEntity.ok(pengirimService.postPengirim(pengirim));
+        } catch (Exception e) {
+            e.getStackTrace();
+            log.info("Gagal menambahkan pengirim " + e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
     }
-
 
 }

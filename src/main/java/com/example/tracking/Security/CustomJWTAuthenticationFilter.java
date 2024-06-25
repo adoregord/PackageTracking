@@ -15,9 +15,11 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class CustomJWTAuthenticationFilter extends OncePerRequestFilter {
 
 	private final JwtService jwtService;
@@ -43,6 +45,10 @@ public class CustomJWTAuthenticationFilter extends OncePerRequestFilter {
 
 		// extract username from jwt token
 		username = jwtService.extractUsername(jwt);
+
+		String USR = (String) jwtService.extractClaim(jwt, claims -> claims.get("sub"));
+
+		log.info(USR);
 
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 

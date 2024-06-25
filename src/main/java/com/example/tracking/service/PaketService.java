@@ -32,12 +32,10 @@ public class PaketService {
             throw new PaketException("Pengirim harus diisi");
         }else if(paket.getPenerima() == null){
             throw new PaketException("Penerima harus diisi");
-        }else if(paket.getBeratPaket() == null || paket.getBeratPaket().isBlank()){
+        }else if(paket.getBeratPaket() == null){
             throw new PaketException("Berat paket harus diisi");
         }else if(paket.getTujuanPengiriman() == null){
             throw new PaketException("Tujuan pengiriman harus diisi");
-        }else if(paket.getId_paket() == null ){
-            throw new PaketException("ID paket harus diisi");
         }
         return paketRepository.save(paket);
     }

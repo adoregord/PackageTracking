@@ -1,5 +1,7 @@
 package com.example.tracking.Auth;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,8 +10,8 @@ import com.example.tracking.Security.JwtService;
 import jakarta.security.auth.message.AuthException;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+// import org.springframework.security.authentication.AuthenticationManager;
+// import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
@@ -25,8 +27,8 @@ public class AuthService {
     @Autowired
     private final JwtService jwtService;
 
-    @Autowired
-    private final AuthenticationManager authenticationManager;
+    // @Autowired
+    // private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse userRegister(RegisterRequest request) throws AuthException {
         //check if the user already exists
@@ -44,7 +46,8 @@ public class AuthService {
             .role(Role.USER)
             .build();
         authRepository.save(user);
-        var jwtToken = jwtService.generateToken(user);
+        Map<String, Object> claims = Map.of("role", user.getRole());
+        var jwtToken = jwtService.generateToken(claims, user);
         return AuthenticationResponse.builder()
             .token(jwtToken)
             .build();
@@ -56,12 +59,13 @@ public class AuthService {
             throw new AuthException("Tidak ada data user, register terlebih dahulu");
         }
 
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(auth.getUsername(), auth.getPassword()));
+        //authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(auth.getUsername(), auth.getPassword()));
         
         //if the user is authenticated then
         var user = authRepository.findByUsername(auth.getUsername())
             .orElseThrow();
-        var jwtToken = jwtService.generateToken(user);
+        Map<String, Object> claims = Map.of("role", user.getRole());
+        var jwtToken = jwtService.generateToken(claims, user);
         return AuthenticationResponse.builder()
             .token(jwtToken)
             .build();

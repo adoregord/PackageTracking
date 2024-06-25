@@ -2,14 +2,12 @@ package com.example.tracking.model;
 
 import java.util.List;
 
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,14 +33,22 @@ public class Pengiriman {
 
     private Float hargaPengiriman;
 
-    @ElementCollection
-    @CollectionTable(name = "checkpoint_pengiriman", joinColumns = @JoinColumn(name = "pengiriman_id"))
-    @Column(name = "lokasi_id")
+    @ManyToMany
     private List<Lokasi> checkpointPengiriman;
-
-    // @OneToMany(mappedBy = "pengiriman", cascade = CascadeType.ALL)
-    // private List<CheckpointPengiriman> checkpointPengiriman;
 
     private Boolean isReceived;
 
 }
+
+    // @ElementCollection
+    // @CollectionTable(name = "checkpoint_pengiriman", joinColumns = @JoinColumn(name = "pengiriman_id"))
+    // @Column(name = "lokasi_id")
+    // private List<Lokasi> checkpointPengiriman;
+    
+
+    // @OneToMany(mappedBy = "pengiriman", cascade = CascadeType.ALL)
+    // private List<CheckpointPengiriman> checkpointPengiriman;
+
+    
+
+

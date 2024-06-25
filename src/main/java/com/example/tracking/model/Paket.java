@@ -21,7 +21,7 @@ public class Paket {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id_paket;
 
-    private String beratPaket;
+    private Double beratPaket;
 
     @ManyToOne
     @JoinColumn(name = "id_pengirim")

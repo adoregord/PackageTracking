@@ -33,6 +33,7 @@ public class PengirimanController {
             return ResponseEntity.ok(pengirimanService.getAllPengiriman());
         } 
         catch (Exception e) {
+            e.getStackTrace();
             log.info("Gagal menampilkan semua pengiriman " + e.getMessage());
             return ResponseEntity.badRequest().build();
         }
@@ -42,9 +43,10 @@ public class PengirimanController {
     public ResponseEntity<?> addPengiriman(@RequestBody Pengiriman pengiriman) {
         try {
             log.info("Menambahkan pengiriman \n");
-            return ResponseEntity.ok(pengirimanService.addPengiriman(pengiriman) + "Pengiriman dengan ID " + pengiriman.getId_pengiriman() + " telah ditambahkan");    
+            return ResponseEntity.ok(pengirimanService.addPengiriman(pengiriman));    
         } 
         catch (Exception e) {
+            e.getStackTrace();
             log.info("Gagal menambahkan pengiriman \n" + e.getMessage());
             return ResponseEntity.badRequest().build();
         }
@@ -57,6 +59,7 @@ public class PengirimanController {
             return ResponseEntity.ok(pengirimanService.pengirimanSampai());
         } 
         catch (Exception e) {
+            e.getStackTrace();
             log.info("Gagal menampilkan list pengiriman " + e.getMessage());
             return ResponseEntity.badRequest().build();
         }
@@ -70,6 +73,7 @@ public class PengirimanController {
              return ResponseEntity.ok(pengirimanService.addCheckpoint(checkpointDTO));
         } 
         catch (Exception e) {
+            e.getStackTrace();
             log.info("Gagal menambahkan checkpoint baru");
             return ResponseEntity.badRequest().build();
         }

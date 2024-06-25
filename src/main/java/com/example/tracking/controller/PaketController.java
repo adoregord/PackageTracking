@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @RestController
 @Slf4j
 @RequestMapping("/api/v1/paket")
@@ -25,36 +24,28 @@ public class PaketController {
 
     @Autowired
     private PaketService paketService;
-    
+
     @GetMapping
     public ResponseEntity<List<Paket>> getAllPaket() {
         try {
             log.info("Menampilkan semua paket");
             return ResponseEntity.ok(paketService.getAllPaket());
-        } 
-        catch (Exception e) {
+        } catch (Exception e) {
             log.info("Gagal menampilkan paket" + e.getMessage());
             return ResponseEntity.badRequest().build();
         }
     }
-    
+
     @PostMapping
-    public ResponseEntity<?> addPaket(@RequestBody Paket paket) {
+    public ResponseEntity<Paket> addPaket(@RequestBody Paket paket) {
         try {
             log.info("Menambahkan paket \n");
-            return ResponseEntity.ok(paketService.addPaket(paket) + "Berhasil menambahkan paket dengan tujuan " + paket.getTujuanPengiriman());
-        } 
-        catch (Exception e) {
+            return ResponseEntity.ok(paketService.addPaket(paket));
+        } catch (Exception e) {
             log.info("Gagal menambahkan paket" + e.getMessage());
             return ResponseEntity.badRequest().build();
         }
-        
     }
-    
-    // @GetMapping("/checkpoint")
-    // public List<Object> getCheckpointPaket() {
-    //     return paketRepository.getCheckpointPaket();
-    // }
 
     @GetMapping("/{checkpoint}")
     public ResponseEntity<List<Object>> getCheckpointPaket(@PathVariable("checkpoint") String checkpoint) {
@@ -65,7 +56,12 @@ public class PaketController {
             log.info("Gagal menampilkan paket berdasarkan checkpoint " + checkpoint + " " + e.getMessage());
             return ResponseEntity.badRequest().build();
         }
-        
+
     }
-    
+
 }
+
+    // @GetMapping("/checkpoint")
+    // public List<Object> getCheckpointPaket() {
+    // return paketRepository.getCheckpointPaket();
+    // }

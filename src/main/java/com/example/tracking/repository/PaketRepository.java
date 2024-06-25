@@ -38,7 +38,7 @@ public interface PaketRepository extends JpaRepository<Paket, Long> {
 		from 
 			Paket as A 
 			inner join Pengiriman as B on A.id_paket = B.paket_id 
-			inner join checkpoint_pengiriman as C ON B.id_pengiriman = C.pengiriman_id 
+			inner join pengiriman_checkpoint_pengiriman as C ON B.id_pengiriman = C.pengiriman_id_pengiriman
 			INNER JOIN Lokasi as D ON C.checkpoint_pengiriman_id_lokasi = D.id_lokasi
 			inner join pengirim as E on A.id_pengirim = E.id_pengirim
 			inner join penerima as F on A.id_penerima = F.id_penerima 

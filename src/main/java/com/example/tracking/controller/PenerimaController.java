@@ -31,7 +31,8 @@ public class PenerimaController {
             return ResponseEntity.ok(penerimaService.getAllPenerima());
         } 
         catch (Exception e) {
-            log.info("Gagal menampilkan semua penerima");
+            e.getStackTrace();
+            log.info("Gagal menampilkan semua penerima " + e.getMessage());
             return ResponseEntity.badRequest().build();
         }
     }
@@ -40,10 +41,11 @@ public class PenerimaController {
     public ResponseEntity<?> addPenerima(@RequestBody Penerima penerima) {
         try {
             log.info("Menambahkan penerima \n");
-            return ResponseEntity.ok(penerimaService.addPenerima(penerima) + "Berhasil menambahkan penerima " + penerima.getNamaPenerima());
+            return ResponseEntity.ok(penerimaService.addPenerima(penerima));
         } 
         catch (Exception e) {
-            log.info("Gagal menambahkan penerima" + e.getMessage());
+            e.getStackTrace();
+            log.info("Gagal menambahkan penerima " + e.getMessage());
             return ResponseEntity.badRequest().build();
         }
         

@@ -34,6 +34,7 @@ public class ServisController {
             return ResponseEntity.ok(servisService.getAllService());      
         } 
         catch (Exception e) {
+            e.getStackTrace();
             log.info("Gagal menampilkan service" + e.getMessage());
             return ResponseEntity.badRequest().build();
         }
@@ -43,9 +44,10 @@ public class ServisController {
     public ResponseEntity<?> addServis(@RequestBody Servis servis) {
         try {
             log.info("Menambahkan service/jasa \n");
-            return ResponseEntity.ok(servisService.addServis(servis) + "Berhasil menambahkan service " + servis.getNamaService());
+            return ResponseEntity.ok(servisService.addServis(servis));
         } 
         catch (Exception e) {
+            e.getStackTrace();
             log.info("Gagal menambahkan servis " + e.getMessage());
             return ResponseEntity.badRequest().build();
         }
